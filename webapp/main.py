@@ -35,3 +35,20 @@ def generate(body: Body):
     """
     string = base64.b64encode(os.urandom(64))[:body.length].decode('utf-8')
     return {'token': string}
+
+
+
+
+@app.post('/checksum')
+def checksum(body: dict):
+    """
+    Accept a POST request with a JSON body containing a single field called "text" and return a checksum of the text.
+    Example POST request body:
+
+    {
+        "text": "example text"
+    }
+    """
+    text = body.get("text", "")
+    checksum_value = base64.b64encode(os.urandom(64))[:len(text)].decode('utf-8')
+    return {'checksum': checksum_value}
